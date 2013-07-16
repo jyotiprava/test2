@@ -8,18 +8,11 @@
 
     // Wait for Cordova to load
     //
+     var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
     document.addEventListener("deviceready", onDeviceReady, false);
 
     // Populate the database 
     //
-    function populateDB(tx) {
-        alert(1);
-        tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-    }
-
     // Query the database
     //
     function queryDB(tx) {
@@ -29,13 +22,17 @@
     // Query the success callback
     //
     function querySuccess(tx, results) {
-        alert(3);
         var len = results.rows.length;
         console.log("DEMO table: " + len + " rows found.");
         for (var i=0; i<len; i++){
-           alert("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
             console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
         }
+        function populateDB(tx) {
+      var name=document.getElementById('name').value;
+        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (results.rows.item(i).max id, name)');
+    }
     }
 
     // Transaction error callback
@@ -55,14 +52,18 @@
     //
     function onDeviceReady() {
       alert(4);
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(populateDB, errorCB, successCB);
+       
+        //db.transaction(populateDB, errorCB, successCB);
+    }
+    function xyz(){
+      db.transaction(populateDB, errorCB, successCB);
     }
 
     </script>
   </head>
   <body>
     <h1>Example</h1>
-    <p>Database</p>
+   <input type="text" id="name" />
+    <input type="button" id="submit" value="submit" onclick="xyz();"/>
   </body>
 </html>
