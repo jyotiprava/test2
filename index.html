@@ -23,11 +23,12 @@
     //
     function querySuccess(tx, results) {
         var len = results.rows.length;
-        console.log("DEMO table: " + len + " rows found.");
+        alert("DEMO table: " + len + " rows found.");
         for (var i=0; i<len; i++){
-            console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+            alert("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
         }
         function populateDB(tx) {
+          alert(results.rows.item(i).max id);
       var name=document.getElementById('name').value;
         //tx.executeSql('DROP TABLE IF EXISTS DEMO');
         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
@@ -38,7 +39,7 @@
     // Transaction error callback
     //
     function errorCB(err) {
-        console.log("Error processing SQL: "+err.code);
+        alert("Error processing SQL: "+err.code);
     }
 
     // Transaction success callback
