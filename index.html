@@ -3,69 +3,47 @@
   <head>
     <title>Storage Example</title>
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.2.0.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // Wait for Cordova to load
     //
-     
     document.addEventListener("deviceready", onDeviceReady, false);
-    var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+      alert(1);
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(populateDB, errorCB, successCB);
+    }
 
     // Populate the database 
     //
-    // Query the database
-    //
-    function queryDB(tx) {
-        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
-    }
-
-    // Query the success callback
-    //
-    function querySuccess(tx, results) {
-        var len = results.rows.length;
-        alert("DEMO table: " + len + " rows found.");
-        for (var i=0; i<len; i++){
-            alert("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
-        }
-        function populateDB(tx) {
-          alert(results.rows.item(i).max id);
-      var name=document.getElementById('name').value;
-        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (results.rows.item(i).max id, name)');
-    }
+    function populateDB(tx) {
+         alert(2);
+         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
     }
 
     // Transaction error callback
     //
-    function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+    function errorCB(tx, err) {
+        alert("Error processing SQL: "+err);
     }
 
     // Transaction success callback
     //
     function successCB() {
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(queryDB, errorCB);
-    }
-
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-      alert(4);
-       
-        //db.transaction(populateDB, errorCB, successCB);
-    }
-    function xyz(){
-      db.transaction(populateDB, errorCB, successCB);
+        alert("success!");
     }
 
     </script>
   </head>
   <body>
     <h1>Example</h1>
-   <input type="text" id="name" />
-    <input type="button" id="submit" value="submit" onclick="xyz();"/>
+    <p>Database</p>
+    <a href="view.htm"><input type="button" value="go"/></a>
   </body>
 </html>
